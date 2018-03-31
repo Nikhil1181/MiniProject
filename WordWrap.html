@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+	
+	<div class="container" >
+		
+		<div class="row p-5">
+			<div class="col-md-12">
+			<div class="display-4 ">
+				<h3 class="text-center">
+				Pick the words in order
+			</h3>
+			</div>
+		</div>
+		</div>
+
+
+		<div class="row text-center">
+			<input class="form-control" type="text" name="sentence" id="sentence" value="">
+
+			<button type="button" id="btnShuffle" class="mt-md-3 text-center btn btn-primary"> Shuffle!</button>
+		</div>
+		<div class="row pt-5">
+		<div class="row" id="selectedText"  style="min-height:70px;">
+		</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div id="shuffledText" class="row">
+				</div>
+				<button class="btn btn-primary btn-lg btnResult" style="display: none;">	
+				</button>
+			</div>				
+			</div>
+		</div>
+	</div>
+
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  	var splitArray,sentence;
+  	var Count=0;
+  	$(document).ready(function () {
+
+  		
+  	});
+
+
+
+
+
+
+$("#shuffledText").on("click", ".btnWord", function(){
+  		$("#selectedText").append($(this));
+  		checkCount();
+  	})
+
+  		$("#btnShuffle").on("click",function(){
+  			sentence=$("#sentence").val();
+  			var shuffledwordsArray= ShuffleText(sentence);
+  			Count=shuffledwordsArray.length;
+  			console.log(Count,"COunt");
+  			
+  			for(i=0;i<shuffledwordsArray.length;i++)
+  			{
+  				var word=shuffledwordsArray[i];
+  				var appendWord =`<div class="col-md-2"><a class="btn btn-primary btnWord" style="color:white">`+ word+`</a></div>`; 
+  				$("#shuffledText").append(appendWord);
+  			}
+
+  			$("#btnShuffle").attr('disabled','true');
+  			console.log(Count);
+  		});
+
+  		function checkCount()
+  		{
+	  		if (Count===$("#selectedText").find("a.btnWord").length) {
+	  			var strcheck="";
+	  			$("#selectedText").find("a.btnWord").each(function(){
+	  				strcheck= strcheck+ $(this).text() + " ";
+	  			})
+	  			strcheck = strcheck.substring(0, strcheck.lastIndexOf(" "));
+	  			console.log(strcheck);
+	  			if (sentence===strcheck) {
+	  				$(".btnResult").text("Correct");
+	  				$(".btnResult").addClass("bg-Primary");
+	  				$(".btnResult").show();
+	  			}
+	  			else
+	  			{
+	  				$(".btnResult").text("InCorrect");
+	  				$(".btnResult").addClass("bg-danger");
+	  				$(".btnResult").show();
+	  			}
+	  			
+	  		}
+  		}
+  	
+  		function ShuffleText(str)
+  		{
+  			splitArray=[];
+			splitArray = sentence.split(" ");
+			console.log(splitArray);
+		    shuffleArray(splitArray);
+			return splitArray;  			
+  		}
+
+  		function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}	
+  </script>
+</body>
+</html>
